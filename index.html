@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Marlborough House Foundation</title>
+<meta name="description" content="Something’s starting to open up in the culture of democracy—here in America and around the world.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e0f12">
+<link rel="preload" href="fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Newsreader";src:url(fonts/newsreader-normal.woff2) format("woff2");font-weight:300 420;font-style:normal;font-display:swap}
+@font-face{font-family:"Newsreader";src:url(fonts/newsreader-italic.woff2) format("woff2");font-weight:300 420;font-style:italic;font-display:swap}
+
+:root{
+  --ink:#e8e2d4;      /* headings */
+  --text:#d3cdbf;     /* body */
+  --soft:#a39b8a;     /* quiet lines */
+  --rule:#5e5749;
+  --bg:#0e0f12;
+  --measure:35rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:"Newsreader",Georgia,"Times New Roman",serif;font-optical-sizing:auto;font-weight:360;font-size:clamp(1.1rem,1.1rem + .3vw,1.3rem);line-height:1.65}
+a{color:inherit}
+a:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--bg);padding:.5em 1em}
+.skip:focus{left:1rem;top:1rem}
+
+/* ---------- Opening: image darkens into the page ---------- */
+.opening{position:relative;height:210vh;height:210svh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#0b0b0d}
+.stage picture,.stage img{position:absolute;inset:0;width:100%;height:100%}
+.stage img{object-fit:cover;object-position:50% 45%;transform:scale(calc(1 + var(--p,0) * .05));transform-origin:50% 40%;will-change:transform}
+.veil{position:absolute;inset:0;background:var(--bg);opacity:calc(var(--p,0) * 1.05)}
+.foot-fade{position:absolute;left:0;right:0;bottom:0;height:35%;background:linear-gradient(transparent,rgba(14,15,18,.9))}
+.nameplate{position:absolute;left:0;right:0;bottom:max(2.2rem,env(safe-area-inset-bottom));text-align:center;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:#b9b2a3;opacity:calc(1 - var(--p,0) * 2.5)}
+.title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 1.25rem;text-align:center}
+.title h1{font-weight:300;font-size:clamp(3.1rem,10.5vw,7.4rem);line-height:.98;letter-spacing:-.02em;color:var(--ink);opacity:clamp(0,(var(--p,0) - .55) * 3.2,1);transform:translateY(calc((1 - clamp(0,(var(--p,0) - .55) * 3.2,1)) * 18px))}
+
+/* No JS, or reduced motion: a still image, then the title on dark */
+.no-js .opening,.still .opening{height:auto}
+.no-js .stage,.still .stage{position:relative;height:88vh;height:88svh}
+.no-js .veil,.still .veil{display:none}
+.no-js .foot-fade,.still .foot-fade{height:60%;background:linear-gradient(transparent,var(--bg))}
+.no-js .title,.still .title{top:auto;bottom:0;padding:0 1.25rem 6vh}
+.no-js .title h1,.still .title h1{opacity:1;transform:none}
+.no-js .nameplate,.still .nameplate{opacity:1;position:static;margin-bottom:1.6rem}
+
+/* ---------- Reading ---------- */
+main{background:linear-gradient(var(--bg) 0%,#0c0d10 40%,#0a0a0c 80%,#0d0c0b 100%)}
+.col{max-width:var(--measure);margin:0 auto;padding:0 1.25rem}
+.lede{padding:4vh 0 0;text-align:center}
+.lede p{font-size:clamp(1.25rem,1.1rem + .8vw,1.55rem);line-height:1.5;color:var(--text);max-width:30rem;margin:0 auto}
+.lede .you{margin-top:2.6em;font-style:italic;color:var(--ink)}
+
+section.part{padding-top:26vh}
+section.part h2{font-weight:300;font-style:italic;font-size:clamp(2rem,1.4rem + 2.6vw,3rem);line-height:1.1;color:var(--ink);text-align:center;margin-bottom:1.3em;letter-spacing:-.005em}
+p+p{margin-top:1.15em}
+
+.close{padding:28vh 0 32vh;text-align:center;background:radial-gradient(60% 45% at 50% 55%,rgba(120,100,70,.08),transparent 70%)}
+.close h2{font-weight:300;font-style:italic;font-size:clamp(2.2rem,1.5rem + 3vw,3.4rem);line-height:1.1;color:var(--ink);margin-bottom:1em}
+.close .mail{display:inline-block;overflow-wrap:anywhere;margin-top:2.2em;font-size:clamp(1.1rem,.9rem + 1.4vw,1.7rem);color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:.25em;transition:border-color 1.2s}
+.close .mail:hover{border-color:var(--ink)}
+
+/* Slow reveal as the reader arrives */
+.js .r{opacity:0;transform:translateY(12px);transition:opacity 1.8s cubic-bezier(.2,.6,.2,1),transform 2s cubic-bezier(.2,.6,.2,1)}
+.js .r.in{opacity:1;transform:none}
+.still .r{opacity:1 !important;transform:none !important;transition:none !important}
+
+@media (max-width:640px){
+  .stage img{object-position:40% 45%}
+  section.part{padding-top:20vh}
+}
+</style>
+</head>
+<body class="no-js">
+<a class="skip" href="#text">Skip to text</a>
+
+<header class="opening" aria-label="The Marlborough House Foundation">
+  <div class="stage">
+    <picture>
+      <source media="(max-aspect-ratio: 3/4)" type="image/webp" srcset="images/banner-portrait-900.webp">
+      <source media="(max-aspect-ratio: 3/4)" srcset="images/banner-portrait-900.jpg">
+      <source type="image/webp" srcset="images/banner-1600.webp 1600w, images/banner-2400.webp 2400w" sizes="100vw">
+      <img src="images/banner-1600.jpg" srcset="images/banner-1600.jpg 1600w, images/banner-2400.jpg 2400w" sizes="100vw" alt="People walk through fog at dusk beneath a flat sheet of light." decoding="async" fetchpriority="high">
+    </picture>
+    <div class="foot-fade" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="title"><p class="nameplate">The Marlborough House Foundation</p><h1>It’s not too early</h1></div>
+  </div>
+</header>
+
+<main id="text">
+  <div class="col">
+
+    <div class="lede">
+      <p class="r">Something’s starting to open up in the culture of democracy—here in America and around the world. It’s early, and most people can’t see it yet. You might.</p>
+    </div>
+
+    <section class="part" aria-labelledby="h-matrix">
+      <h2 id="h-matrix" class="r">That matrix feeling</h2>
+      <p class="r">For years now, many of us have known something is wrong.</p>
+      <p class="r">Not worse—like things just ain’t what they used to be. Wrong.</p>
+      <p class="r">It’s not unusual to feel loss. It’s not unusual to long for a simpler time, before some new and complicated force upended an established and essential part of our lives—an element so normal, we took it for granted until it was gone. That’s the modern world for you.</p>
+      <p class="r">This isn’t that.</p>
+      <p class="r">This is an intuitive awareness that something is actually wrong. Something is off. And it isn’t political, as such—even if it refracts in politics. It’s on a deeper level. Something we’d internalized as true about the world we’re living in, isn’t true. At some point, we started feeling it was uncanny. Then we started experiencing it actually glitching. Now we know: What we’ve been living in isn’t real. But it isn’t simply fake, either. It’s a sort of augmented reality—an algorithmic distortion field, operating through billions of screens, that thrives on addiction and division.</p>
+      <p class="r">All this scrolling. All that wondering where the time went—or what we’d even been thinking about. All the stories we’ve consumed about “them”—the “other side”—who exploit and cultivate the apparently horrifying ignorance of half our country. All the relentless little hits the media has been dosing us with, so we’ll experience one dopamine-powered emotional loop, over and over again: from fear to anger to contempt. None of this was ever just the times a-changin’. All of it is manufactured—by and for the builders of a digital system that needs it.</p>
+      <p class="r">Most of us, still, can’t see this entirely for what it is. But more and more of us can. Now what?</p>
+    </section>
+
+    <section class="part" aria-labelledby="h-opening">
+      <h2 id="h-opening" class="r">The opening</h2>
+      <p class="r">This is not a situation we’re going to be able to argue our way out of.</p>
+      <p class="r">The algorithmic distortion field works through engagement—by capturing and holding human attention through digital technology, while absorbing us, swipe after swipe, into experiencing digital “content” as truer than real life. And the most effective way to do that is by delivering a type of emotional intensity that triggers dopamine in the human brain—above all, fear, anger, and contempt. The more digital content succeeds in delivering this type of emotional intensity, the more it converts dopamine hits into dopamine addiction—fueling the demand for more.</p>
+      <p class="r">A digital system optimized for engagement, then, is optimized for addiction and division. And in a system optimized for addiction and division, any argument you can make has one of two fates: It feeds a new cycle of fear, anger, and contempt, or it disappears in the stream.</p>
+      <p class="r">We can’t argue our way out of this distortion field—but we can build an alternative that rivals and ultimately replaces it. And when we do, it will be the most important enterprise of our time.</p>
+      <p class="r">This isn’t hypothetical. The groundwork for the enterprise is already underway. Everywhere, people are developing elements of a new digital ecosystem—one that doesn’t cultivate or exploit human weakness but supports human capacity and resiliency. And this work is happening across not only geographies but sectors—in technology, in commerce, in civic life.</p>
+      <p class="r">What it’s missing: cultural presence. Because this work is so decentralized, and because the media system around it doesn’t recognize or reward it, it stays marginal in hearts and minds at large.</p>
+      <p class="r">But there’s a way to change that—using what’s still the most powerful force in modern society: latent consumer demand. The means aren’t new; they’re tried and true—only needing creative adaptation to the instruments of contemporary media: designing premium products for deep value; creating premium experiences that meet people as aspirational human beings, who want elevation in consumption; and cultivating self-reinforcing habits and loyalty at scale.</p>
+    </section>
+
+  </div>
+
+  <section class="close" aria-labelledby="h-catalyst">
+    <div class="col">
+      <h2 id="h-catalyst" class="r">A new catalyst</h2>
+      <p class="r">This is the work of the Marlborough House Foundation: a new initiative in partnership with the media company Marlborough House and its flagship current-affairs brand, The Signal—led by veterans of The Atlantic and The Guardian.</p>
+      <p class="r">To learn more, please be in touch.</p>
+      <a class="mail r" href="mailto:team@marlboroughhousefoundation.org">team@marlboroughhousefoundation.org</a>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var b=document.body, d=document.documentElement;
+  b.classList.remove('no-js');
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){b.classList.add('still');return;}
+  b.classList.add('js');
+
+  // Opening: scroll position (0 → 1) darkens the image and brings up the title.
+  var opening=document.querySelector('.opening'), ticking=false;
+  function frame(){
+    var span=opening.offsetHeight-window.innerHeight;
+    var p=Math.min(1,Math.max(0,window.scrollY/span));
+    d.style.setProperty('--p',p.toFixed(4));
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(frame);}},{passive:true});
+  window.addEventListener('resize',frame);
+  frame();
+
+  // Text settles in once, as the reader reaches it.
+  var els=document.querySelectorAll('.r');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
